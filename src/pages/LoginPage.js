@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword ,GoogleAuthProvider,signInWithPopup} from "firebase/auth";
 import { auth } from "../services/firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +16,16 @@ const LoginPage = () => {
       alert(err.message);
     }
   };
+  const googleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      navigate("/dashboard");
+    } catch (err) {
+      alert(err.message);
+      console.error("Google sign-in error:", err);
+    }
+  };
 
   return (
     <div>
@@ -23,6 +33,10 @@ const LoginPage = () => {
       <input placeholder="Email" onChange={e => setEmail(e.target.value)} />
       <input placeholder="Password" type="password" onChange={e => setPassword(e.target.value)} />
       <button onClick={login}>Login</button>
+
+       <hr />
+
+      <button onClick={googleSignIn}>Sign in with Google</button>
     </div>
   );
 };
