@@ -3,16 +3,20 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import { AuthProvider } from "./auth/AuthContext";
+import ShowTokenPage from "./pages/ShowTokenPage";
+import Dashboard from "./pages/Dashboard";
+import EventList from "./components/EventList";
 
-const Dashboard = () => <h2>Dashboard (Protected)</h2>;
-
+import EventDetailsPage from "./components/EventDetailsPage";
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
+          <Route path='/show-token' element={<ShowTokenPage/>} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+         
           <Route
             path="/dashboard"
             element={
@@ -21,6 +25,22 @@ function App() {
               </ProtectedRoute>
             }
           />
+           <Route
+            path="/events"
+            element={
+              <ProtectedRoute>
+                <EventList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+  path="/events/:id"
+  element={
+    <ProtectedRoute>
+      <EventDetailsPage />
+    </ProtectedRoute>
+  }
+/>
           <Route path="*" element={<LoginPage />} />
         </Routes>
       </Router>

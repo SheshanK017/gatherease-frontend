@@ -12,6 +12,8 @@ export const AuthProvider = ({ children }) => {
     return () => unsub();
   }, []);
 
+   window.auth = auth;
+   
   return (
     <AuthContext.Provider value={{ user }}>
       {children}
